@@ -1,3 +1,40 @@
+/* About */
+.quote {
+  color: #505050;
+}
+
+/* Contact */
+.card ul {
+  list-style: none;
+}
+
+/* Index */
+.mission {
+  border: 1px solid rgba(0,0,0,.125);
+  border-radius: .25rem;
+  background-color: #343a40;
+  color:#fff;
+  padding: 10px;
+}
+
+.btn-info {
+  display:block;
+}
+
+/* Spacing */
+.mb-30 {
+  margin-bottom: 30px;
+}
+
+/* Footer Styles */
+footer {
+  background-color: #343a40;
+  overflow: auto;
+}
+footer p, footer a {
+  color:#fff;
+}
+
 /* Navbar
  * Open dropdowns on hover instead of click.
  */
