@@ -1,3 +1,4 @@
+//Contact
 jQuery(document).ready(function($) {
   $(".clickable-row").click(function() {
     if ($(this).data("target")) {

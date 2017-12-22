@@ -14,6 +14,18 @@ h4 {
   line-height: 50px;
   font-size: 2.25rem;
 }
+nav a {
+  padding: 10px !important;
+  font-weight: bold;
+}
+nav a.nav-link.active {
+  background-color: #343a40;
+  color: #fff !important;
+  border-radius: 10px;
+}
+ul {
+  list-style: square;
+}
 
 /* About */
 .quote {
@@ -21,11 +33,13 @@ h4 {
 }
 
 /* Contact */
-.card ul {
-  list-style: none;
-}
 .clickable-row {
   cursor: pointer;
+}
+
+/* Career */
+a:hover {
+  text-decoration: none;
 }
 
 /* Index */
@@ -40,9 +54,17 @@ h4 {
 .btn-info {
   display: block;
   font-size: 1.25rem;
+  margin: auto;
+}
+
+.carousel h3 {
+  text-shadow: 1px 1px 2px black;
 }
 
 /* Footer Styles */
+html {
+  background-color: #343a40;
+}
 footer {
   background-color: #343a40;
   overflow: hidden;
