@@ -247,6 +247,13 @@ function mail_attachment($filename, $path, $mailto, $from_mail, $from_fname, $fr
         
        mail($email_to, $email_subject, $email_message, $headers);         
        
-}    */
+}    
+
+We understand that you have choices, too. But, we operate with the confidence of a proven track record of helping clients just like you to realize new heights of success. 
+
+We guide our clients in discovering new opportunities, achieving greater efficiency and capacity, and inevitably, enjoying a higher return on their human resource investment. As your trusted advisor for talent supply, we’ll help you achieve greater growth and success. 
+
+At First Choice Group, we’re Difference Makers™ -- and that’s precisely what we’ll deliver for you. Let us show your organization what results our passion can deliver.
+*/
 
 ?>

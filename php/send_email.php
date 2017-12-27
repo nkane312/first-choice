@@ -14,12 +14,12 @@ if($_POST){
     $sender_email   = filter_var($_POST["email"], FILTER_SANITIZE_EMAIL); //capture sender email
     //$country_code   = filter_var($_POST["phone1"], FILTER_SANITIZE_NUMBER_INT);
     //$phone_number   = filter_var($_POST["phone2"], FILTER_SANITIZE_NUMBER_INT);
-    $subject = "Resume from $sender_fname $sender_lname\n";
+    $subject = "$sender_fname $sender_lname's Resume from firstchoicegroupinc.com\n";
     //$subject        = filter_var($_POST["subject"], FILTER_SANITIZE_STRING);
     //$message        = filter_var($_POST["message"], FILTER_SANITIZE_STRING); //capture message
 
-    $attachments = $_FILES['file_attach'];
-    
+    $attachment = $_FILES['file_attach'];
+    $reply_email = "resumes@firstchoicegroupinc.com";
     
     //php validation, exit outputting json string
     if(strlen($sender_fname)<1){
@@ -48,11 +48,11 @@ if($_POST){
     }*/
 
     
-    $file_count = count($attachments['name']); //count total files attached
-    $boundary = md5("firstchoicegroup.com"); 
+    //$file_count = count($attachments['name']); //count total files attached
+    $boundary = md5("firstchoicegroupinc.com"); 
     
     //construct a message body to be sent to recipient
-    $message_body =  "Resume from $sender_fname $sender_lname attached.\n";
+    $message_body =  "Resume sent from firstchoicegroupinc.com by $sender_fname $sender_lname attached.\n";
     $message_body .=  "------------------------------\n";
     //$message_body .=  "$message\n";
     //$message_body .=  "------------------------------\n";
@@ -61,11 +61,13 @@ if($_POST){
     $message_body .=  "$sender_email\n";
     //$message_body .=  "$country_code$phone_number\n";
     
-    if($file_count > 0){ //if attachment exists
+    if($attachment){ //if attachment exists
+
+      
         //header
         $headers = "MIME-Version: 1.0\r\n"; 
         $headers .= "From:".$sender_email."\r\n"; 
-        $headers .= "Reply-To: ".$sender_email."" . "\r\n";
+        $headers .= "Reply-To: ".$reply_email."" . "\r\n";
         $headers .= "Content-Type: multipart/mixed; boundary = $boundary\r\n\r\n"; 
         
         //message text
@@ -75,10 +77,10 @@ if($_POST){
         $body .= chunk_split(base64_encode($message_body)); 
 
         //attachments
-        for ($x = 0; $x < $file_count; $x++){       
-            if(!empty($attachments['name'][$x])){
+        //for ($x = 0; $x < $file_count; $x++){       
+            //if(!empty($attachments['name'][$x])){
                 
-                if($attachments['error'][$x]>0) //exit script and output error if we encounter any
+                if($attachment['error']>0) //exit script and output error if we encounter any
                 {
                     $mymsg = array( 
                     1=>"The uploaded file exceeds the upload_max_filesize directive in php.ini", 
@@ -86,21 +88,21 @@ if($_POST){
                     3=>"The uploaded file was only partially uploaded", 
                     4=>"No file was uploaded", 
                     6=>"Missing a temporary folder" ); 
-                    print  json_encode( array('type'=>'error',$mymsg[$attachments['error'][$x]]) ); 
+                    print  json_encode( array('type'=>'error',$mymsg[$attachment['error']]) ); 
                     exit;
                 }
                 
                 //get file info [$x]
-                $file_name = $attachments['name'];
-                $file_size = $attachments['size'];
-                $file_type = $attachments['type'];
+                $file_name = $attachment['name'];
+                $file_size = $attachment['size'];
+                $file_type = $attachment['type'];
                 
                 
                 //var_dump($file_size);
                 //echo $attachments['tmp_name'][$x];
 
                 //read file 
-                $handle = fopen($attachments['tmp_name'], "r");
+                $handle = fopen($attachment['tmp_name'], "r");
                 $content = fread($handle, $file_size);
                 fclose($handle);
                 $encoded_content = chunk_split(base64_encode($content)); //split into smaller chunks (RFC 2045)
@@ -111,23 +113,30 @@ if($_POST){
                 $body .="Content-Transfer-Encoding: base64\r\n";
                 $body .="X-Attachment-Id: ".rand(1000,99999)."\r\n\r\n"; 
                 $body .= $encoded_content; 
-            }
-        }
+            //}
+        //}
 
     }else{ //send plain email otherwise
        $headers = "From:".$sender_email."\r\n".
-        "Reply-To: ".$sender_email. "\n" .
+        "Reply-To: ".$reply_email. "\n" .
         "X-Mailer: PHP/" . phpversion();
         $body = $message_body;
     }
-        
+    
+    //var_dump($headers);
+
     $sentMail = mail($recipient_email, $subject, $body, $headers);
+
+    //var_dump($sentMail);
+
     if($sentMail) //output success or failure messages
-    {       
-        print json_encode(array('type'=>'done', 'text' => 'Thank you for your email'));
+    {    
+           
+        print json_encode(array('type'=>'done', 'text' => 'Thank you for your email!'));
         exit;
     }else{
-        print json_encode(array('type'=>'error', 'text' => 'Could not send mail! Please check your PHP mail configuration.'));  
+      print_r(error_get_last());
+        print json_encode(array('type'=>'error', 'text' => 'Could not send mail! Please check your information and file size/type.'));  
         exit;
     }
 }

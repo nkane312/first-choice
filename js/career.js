@@ -1,21 +1,4 @@
 //Career
-/*document.addEventListener("DOMContentLoaded", function(event) {
-  $("#submit-button").click(function() {
-    $.ajax({
-      url: "../php/send_email.php",
-      type: "POST",
-      data: {
-        email: $("#emailInput").value,
-        fname: $("firstInput").value,
-        lname: $("#lastInput").value,
-        file: $("#uploadInput").value
-      },
-      success: function(msg) {
-        alert("Email Sent");
-      }
-    });
-  });
-});*/
 
 var allowed_file_size = "524288"; //512 KB allowed file size
 var allowed_file_types = [
@@ -28,6 +11,10 @@ var maximum_files = 1; //Maximum number of files allowed
 
 $("#email_form").submit(function(e) {
   e.preventDefault(); //prevent default action
+
+  document.getElementById("loader").style.display = "block";
+  document.getElementById("submit-button").style.display = "none";
+
   proceed = true;
 
   //simple input validation
@@ -58,6 +45,8 @@ $("#email_form").submit(function(e) {
     var total_files_size = 0;
     if (this.elements["file_attach"].files.length > maximum_files) {
       alert("Can not select more than " + maximum_files + " file(s)");
+      document.getElementById("loader").style.display = "none";
+      document.getElementById("submit-button").style.display = "block";
       proceed = false;
     }
     $(this.elements["file_attach"].files).each(function(i, ifile) {
@@ -65,6 +54,8 @@ $("#email_form").submit(function(e) {
         //continue only if file(s) are selected
         if (allowed_file_types.indexOf(ifile.type) === -1) {
           //check unsupported file
+          document.getElementById("loader").style.display = "none";
+          document.getElementById("submit-button").style.display = "block";
           alert(ifile.name + " is unsupported file type!");
           proceed = false;
         }
@@ -72,6 +63,8 @@ $("#email_form").submit(function(e) {
       }
     });
     if (total_files_size > allowed_file_size) {
+      document.getElementById("loader").style.display = "none";
+      document.getElementById("submit-button").style.display = "block";
       alert("Make sure total file size is less than 500 KB!");
       proceed = false;
     }
@@ -95,11 +88,19 @@ $("#email_form").submit(function(e) {
     }).done(function(res) {
       //fetch server "json" messages when done
       if (res.type == "error") {
-        $("#contact_results").html('<div class="error">' + res.text + "</div>");
+        $("#upload-results").prepend(
+          '<div class="error alert alert-danger text-center"><strong>' +
+            res.text +
+            "</strong></div>"
+        );
+        document.getElementById("loader").style.display = "none";
+        document.getElementById("submit-button").style.display = "block";
       }
       if (res.type == "done") {
-        $("#contact_results").html(
-          '<div class="success">' + res.text + "</div>"
+        $("#upload-results").html(
+          '<div class="success alert alert-success text-center"><strong>' +
+            res.text +
+            "</strong></div>"
         );
       }
     });

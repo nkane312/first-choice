@@ -236,52 +236,34 @@
                     <div class="col-md-3 mb-4 mt-4">
                         <div class="row">
                             <div class="card" style="width: 25rem;">
-                                <div id="contact_results"></div>
                                 <div class="card-body">
-
-
-                                    <h3 class="mb-3">Email Your Resume Here:</h3>
-                                    <hr>
-                                    <form method="POST" action="php/send_email.php" id="email_form" enctype="multipart/form-data">
-                                        <div class="form-group">
-                                            <label for="firstInput">First Name</label>
-                                            <input type="text" class="form-control" id="firstInput" placeholder="Enter first name" name="fname" data-required="true"
-                                                required>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="lastInput">Last Name</label>
-                                            <input type="text" class="form-control" id="lastInput" placeholder="Enter first name" name="lname" data-required="true" required>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="emailInput">Email Address</label>
-                                            <input type="email" class="form-control" id="emailInput" aria-describedby="emailHelp" name="email" placeholder="Enter email"
-                                                data-required="true" required>
-                                            <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="uploadInput">Select Your Resume File:</label>
-                                            <input type="file" class="form-control-file" id="uploadInput" name="file_attach" data-required="true" required>
-                                        </div>
-                                        <button type="submit" class="btn btn-info">Submit</button>
-                                    </form>
-
-
-
-                                    <!--<div class="col-12 text-center">
-                                        <a href="https://www.linkedin.com/in/williamrlange/" target="_blank">
-                                            <img src="./img/Logo-2C-28px-TM.png">
-                                        </a>
-                                    </div>-->
-                                    <!--          
-                                <ul>
-                                    <li>210 E. Station St., Ste. 7
-                                        Barrington, IL  60010</li>
-                                    <li>Office: 847-304-3900 x313</li>
-                                    <li>Cell: 630-533-2313</li>
-                                    <li>Fax: 312-267-0442</li>
-                                    <li>Email: <a href="maito:bill@firstchoiceinc.net">bill@firstchoiceinc.net</a></li>
-                                </ul>
-                            -->
+                                    <div id="upload-results">
+                                        <h3 class="mb-3">Email Your Resume Here:</h3>
+                                        <hr>
+                                        <form method="POST" action="php/send_email.php" id="email_form" enctype="multipart/form-data">
+                                            <div class="form-group">
+                                                <label for="firstInput">First Name</label>
+                                                <input type="text" class="form-control" id="firstInput" placeholder="Enter first name" name="fname" data-required="true"
+                                                    required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="lastInput">Last Name</label>
+                                                <input type="text" class="form-control" id="lastInput" placeholder="Enter first name" name="lname" data-required="true" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="emailInput">Email Address</label>
+                                                <input type="email" class="form-control" id="emailInput" aria-describedby="emailHelp" name="email" placeholder="Enter email"
+                                                    data-required="true" required>
+                                                <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="uploadInput">Select Your Resume File:</label>
+                                                <input type="file" class="form-control-file" id="uploadInput" name="file_attach" data-required="true" required>
+                                            </div>
+                                            <div id="loader"></div>
+                                            <button type="submit" id="submit-button" class="btn btn-info">Submit</button>
+                                        </form>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -304,7 +286,6 @@
         </div>
     </footer>
 
-    <!--<script src="js/navbar.js"></script>-->
     <script src="js/jquery-3.2.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh"
         crossorigin="anonymous"></script>
